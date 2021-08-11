@@ -73,4 +73,13 @@ public class DBHelper extends SQLiteOpenHelper {
         String selection = MyConstants._ID + "=" + id;
         sqlDB.delete(MyConstants.TABLE_NAME, selection, null);
     }
+
+    public void updateItemToId(String title, String description, String uri ,int id) {
+        String selection = MyConstants._ID + "=" + id;
+        sv = new ContentValues();
+        sv.put(MyConstants.TITLE, title);
+        sv.put(MyConstants.DESCRIPTION, description);
+        sv.put(MyConstants.URI, uri);
+        sqlDB.update(MyConstants.TABLE_NAME, sv ,selection, null);
+    }
 }

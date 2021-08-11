@@ -1,6 +1,7 @@
 package com.qwertynetwork.myapplication;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -25,6 +26,7 @@ public class EditActivity extends AppCompatActivity {
     private ImageButton imageButtonAdd, imageButtonDelete;
     private ImageView image_crete;
     private ConstraintLayout container_for_image;
+    private ListItem item;
 
     private DBHelper dbHelper;
 
@@ -65,12 +67,19 @@ public class EditActivity extends AppCompatActivity {
     private void getMyIntent() {
         Intent intent = getIntent();
         if (intent != null) {
-            ListItem item = (ListItem) intent.getSerializableExtra(MyConstants.LIST_ITEM_INTENT);
+            item = (ListItem) intent.getSerializableExtra(MyConstants.LIST_ITEM_INTENT);
             isEditState = intent.getBooleanExtra(MyConstants.EDIT_STATE, true);
 
             if (!isEditState) {
                 edTitleSave.setText(item.getTitle());
                 edTextSave.setText(item.getDescription());
+                if (!item.getUri().equals("empty")) {
+                    tempUri = item.getUri();
+                    container_for_image.setVisibility(View.VISIBLE);
+                    image_crete.setImageURI(Uri.parse(item.getUri()));
+                    imageButtonAdd.setVisibility(View.GONE);
+                    imageButtonDelete.setVisibility(View.GONE);
+                }
             }
         }
     }
@@ -91,7 +100,7 @@ public class EditActivity extends AppCompatActivity {
         imageButtonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent search_image_intent = new Intent(Intent.ACTION_PICK);
+                Intent search_image_intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 search_image_intent.setType("image/*");
                 startActivityForResult(search_image_intent, MyConstants.REQUEST_CODE);
             }
@@ -108,15 +117,20 @@ public class EditActivity extends AppCompatActivity {
         });
     }
 
+    //Сохранение фотографии на долго
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == MyConstants.REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+
             tempUri = data.getData().toString();
             image_crete.setImageURI(data.getData());
+            getContentResolver().takePersistableUriPermission(data.getData(), Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
     }
 
+    //открываем базу данных
     @Override
     protected void onResume() {
         super.onResume();
@@ -134,10 +148,15 @@ public class EditActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(title) || TextUtils.isEmpty(text)) {
                     Toast.makeText(EditActivity.this, "Вы не заполнили поля", Toast.LENGTH_SHORT).show();
                 } else {
-                    dbHelper.insertToDB(title, text, tempUri);
-                    Toast.makeText(EditActivity.this, "Все успешно сохранено", Toast.LENGTH_SHORT).show();
-                    finish();
+                    if (isEditState) {
+                        dbHelper.insertToDB(title, text, tempUri);
+                        Toast.makeText(EditActivity.this, "Все успешно сохранено", Toast.LENGTH_SHORT).show();
+                    } else {
+                        dbHelper.updateItemToId(title, text, tempUri ,item.getId());
+                    }
+                    //закрываем базу
                     dbHelper.closeDB();
+                    finish();
                 }
             }
         });
