@@ -14,8 +14,7 @@ import java.util.List;
 public class DBHelper extends SQLiteOpenHelper {
 
     private SQLiteDatabase sqlDB;
-    private Context context;
-    //private ContentValues sv;
+    private ContentValues sv;
     private Cursor cursor;
 
     public DBHelper(@Nullable Context context) {
@@ -37,10 +36,11 @@ public class DBHelper extends SQLiteOpenHelper {
         sqlDB = this.getWritableDatabase();
     }
 
-    public void insertToDB(String title, String description) {
-        ContentValues sv = new ContentValues();
+    public void insertToDB(String title, String description, String uri) {
+        sv = new ContentValues();
         sv.put(MyConstants.TITLE, title);
         sv.put(MyConstants.DESCRIPTION, description);
+        sv.put(MyConstants.URI, uri);
         sqlDB.insert(MyConstants.TABLE_NAME, null, sv);
     }
     public List<String> getFromDB() {
@@ -56,8 +56,5 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void closeDB() {
         this.close();
-    }
-
-    public void clearDB() {
     }
 }

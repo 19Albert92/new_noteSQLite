@@ -2,4 +2,8 @@
     <string name="app_name">My Application</string>
     <string name="hint_title">Title</string>
     <string name="description">Descriptions</string>
+    <string name="save">save</string>
+    <string name="create_image">create image</string>
+    <string name="image_button_add">image button add</string>
+    <string name="image_delete">image delete</string>
 </resources>

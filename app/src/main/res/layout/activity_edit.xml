@@ -1,11 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_dark"
     android:padding="10dp"
     tools:context=".EditActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_for_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/edTitleSave"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_crete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:drawable/editbox_background" />
+
+        <ImageButton
+            android:id="@+id/button_image_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:padding="15dp"
+            android:src="@drawable/ic_baseline_image_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/image_button_add" />
+
+        <ImageButton
+            android:contentDescription="@string/image_delete"
+            android:id="@+id/button_image_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:padding="15dp"
+            android:src="@drawable/ic_baseline_delete_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edTitleSave"
@@ -14,29 +55,54 @@
         android:background="@android:drawable/editbox_background"
         android:hint="@string/hint_title"
         android:inputType="text"
-        android:padding="20dp" />
+        android:padding="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/container_for_image"
+        app:layout_constraintBottom_toTopOf="@+id/edTextSave"/>
 
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edTextSave"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/edTitleSave"
+        android:layout_height="0dp"
         android:background="@android:drawable/editbox_background"
         android:gravity="top"
-        android:inputType="text"
         android:hint="@string/description"
-        android:padding="12dp" />
+        android:inputType="textMultiLine"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/edTitleSave"
+        app:layout_constraintStart_toStartOf="@+id/edTitleSave"
+        app:layout_constraintTop_toBottomOf="@+id/edTitleSave" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_search_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="80dp"
+        android:alpha="0.8"
+        android:backgroundTint="@android:color/holo_blue_bright"
+        android:src="@drawable/ic_baseline_image_search_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/create_image"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/button_search_image"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="15dp"
+        android:alpha="0.8"
         android:backgroundTint="@android:color/holo_blue_dark"
-        android:outlineAmbientShadowColor="@color/black"
-        android:outlineSpotShadowColor="@color/black"
-        android:src="@drawable/ic_baseline_save_alt_24" />
+        android:src="@drawable/ic_baseline_save_alt_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/save" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

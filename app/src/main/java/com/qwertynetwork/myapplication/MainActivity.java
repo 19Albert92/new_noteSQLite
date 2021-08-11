@@ -1,20 +1,16 @@
 package com.qwertynetwork.myapplication;
 
-import androidx.annotation.Nullable;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.qwertynetwork.myapplication.adapter.MainAdapter;
 import com.qwertynetwork.myapplication.db.DBHelper;
-import com.qwertynetwork.myapplication.db.MyConstants;
 
 public class MainActivity extends AppCompatActivity {
 
