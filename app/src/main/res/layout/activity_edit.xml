@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_dark"
+    android:padding="10dp"
+    tools:context=".EditActivity">
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edTitleSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/editbox_background"
+        android:hint="@string/hint_title"
+        android:inputType="text"
+        android:padding="20dp" />
+
+    <EditText
+        android:id="@+id/edTextSave"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/edTitleSave"
+        android:background="@android:drawable/editbox_background"
+        android:gravity="top"
+        android:inputType="text"
+        android:hint="@string/description"
+        android:padding="12dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="15dp"
+        android:backgroundTint="@android:color/holo_blue_dark"
+        android:outlineAmbientShadowColor="@color/black"
+        android:outlineSpotShadowColor="@color/black"
+        android:src="@drawable/ic_baseline_save_alt_24" />
+
+</RelativeLayout>
