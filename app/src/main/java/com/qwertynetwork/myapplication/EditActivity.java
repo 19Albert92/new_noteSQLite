@@ -16,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.qwertynetwork.myapplication.db.DBHelper;
 import com.qwertynetwork.myapplication.db.MyConstants;
+import com.qwertynetwork.myapplication.model.ListItem;
 
 public class EditActivity extends AppCompatActivity {
 
@@ -28,12 +29,14 @@ public class EditActivity extends AppCompatActivity {
     private DBHelper dbHelper;
 
     private String tempUri = "empty";
+    private boolean isEditState = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
         initialView();
+        getMyIntent();
     }
 
     private void initialView() {
@@ -57,6 +60,19 @@ public class EditActivity extends AppCompatActivity {
 
         buttonAddImage = (FloatingActionButton) findViewById(R.id.button_search_image);
         addClickForButtonSave();
+    }
+
+    private void getMyIntent() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            ListItem item = (ListItem) intent.getSerializableExtra(MyConstants.LIST_ITEM_INTENT);
+            isEditState = intent.getBooleanExtra(MyConstants.EDIT_STATE, true);
+
+            if (!isEditState) {
+                edTitleSave.setText(item.getTitle());
+                edTextSave.setText(item.getDescription());
+            }
+        }
     }
 
     private void deleteDisplayImage() {

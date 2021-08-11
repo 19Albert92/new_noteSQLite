@@ -17,7 +17,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="#603D3D3D"/>
+        android:layout_height="3dp"
+        android:background="#463D3D3D" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

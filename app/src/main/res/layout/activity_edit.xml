@@ -14,6 +14,7 @@
         android:layout_height="200dp"
         android:layout_below="@+id/edTitleSave"
         android:visibility="gone"
+        android:background="@drawable/radius_10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,7 +23,7 @@
             android:id="@+id/image_crete"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:drawable/editbox_background" />
+            android:background="@drawable/radius_10"/>
 
         <ImageButton
             android:id="@+id/button_image_add"
@@ -52,20 +53,21 @@
         android:id="@+id/edTitleSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:drawable/editbox_background"
+        android:background="@drawable/radius_10"
         android:hint="@string/hint_title"
         android:inputType="text"
         android:padding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/container_for_image"
-        app:layout_constraintBottom_toTopOf="@+id/edTextSave"/>
+        app:layout_constraintBottom_toTopOf="@+id/edTextSave"
+        android:layout_marginVertical="8dp"/>
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edTextSave"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@android:drawable/editbox_background"
+        android:background="@drawable/radius_10"
         android:gravity="top"
         android:hint="@string/description"
         android:inputType="textMultiLine"

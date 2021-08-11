@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.qwertynetwork.myapplication.model.ListItem;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,12 +45,21 @@ public class DBHelper extends SQLiteOpenHelper {
         sv.put(MyConstants.URI, uri);
         sqlDB.insert(MyConstants.TABLE_NAME, null, sv);
     }
-    public List<String> getFromDB() {
-        List<String> tempList = new ArrayList<>();
-        cursor = sqlDB.query(MyConstants.TABLE_NAME, null, null, null,null,null,null);
+    public List<ListItem> getFromDB(String searchText) {
+        List<ListItem> tempList = new ArrayList<>();
+        String selection = MyConstants.TITLE + " like ?";
+        cursor = sqlDB.query(MyConstants.TABLE_NAME, null, selection, new String[]{"%" + searchText + "%"},null,null,null);
         while (cursor.moveToNext()) {
+            ListItem item = new ListItem();
             String title = cursor.getString(cursor.getColumnIndex(MyConstants.TITLE));
-            tempList.add(title);
+            String disc = cursor.getString(cursor.getColumnIndex(MyConstants.DESCRIPTION));
+            String uri = cursor.getString(cursor.getColumnIndex(MyConstants.URI));
+            int _id = cursor.getInt(cursor.getColumnIndex(MyConstants._ID));
+            item.setTitle(title);
+            item.setDescription(disc);
+            item.setUri(uri);
+            item.setId(_id);
+            tempList.add(item);
         }
         cursor.close();
         return tempList;
@@ -56,5 +67,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void closeDB() {
         this.close();
+    }
+
+    public void deleteDBForId(int id) {
+        String selection = MyConstants._ID + "=" + id;
+        sqlDB.delete(MyConstants.TABLE_NAME, selection, null);
     }
 }

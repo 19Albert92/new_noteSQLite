@@ -1,6 +1,8 @@
 package com.qwertynetwork.myapplication.db;
 
 public class MyConstants {
+    public static final String LIST_ITEM_INTENT = "list item intent";
+    public static final String EDIT_STATE = "edit state";
     public static final String _ID = "_id";
     public static final String TITLE = "title";
     public static final String DESCRIPTION = "description";

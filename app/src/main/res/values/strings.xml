@@ -6,4 +6,5 @@
     <string name="create_image">create image</string>
     <string name="image_button_add">image button add</string>
     <string name="image_delete">image delete</string>
+    <string name="search">search</string>
 </resources>
