@@ -45,7 +45,7 @@ public class DBHelper extends SQLiteOpenHelper {
         sv.put(MyConstants.URI, uri);
         sqlDB.insert(MyConstants.TABLE_NAME, null, sv);
     }
-    public List<ListItem> getFromDB(String searchText) {
+    public void getFromDB(String searchText, OnDataReceived onDataReceived) {
         List<ListItem> tempList = new ArrayList<>();
         String selection = MyConstants.TITLE + " like ?";
         cursor = sqlDB.query(MyConstants.TABLE_NAME, null, selection, new String[]{"%" + searchText + "%"},null,null,null);
@@ -62,7 +62,7 @@ public class DBHelper extends SQLiteOpenHelper {
             tempList.add(item);
         }
         cursor.close();
-        return tempList;
+       onDataReceived.onReceived(tempList);
     }
 
     public void closeDB() {

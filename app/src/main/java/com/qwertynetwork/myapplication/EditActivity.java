@@ -142,17 +142,22 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String title = edTitleSave.getText().toString();
-                String text = edTextSave.getText().toString();
+                final String title = edTitleSave.getText().toString();
+                final String text = edTextSave.getText().toString();
 
                 if (TextUtils.isEmpty(title) || TextUtils.isEmpty(text)) {
                     Toast.makeText(EditActivity.this, "Вы не заполнили поля", Toast.LENGTH_SHORT).show();
                 } else {
                     if (isEditState) {
-                        dbHelper.insertToDB(title, text, tempUri);
-                        Toast.makeText(EditActivity.this, "Все успешно сохранено", Toast.LENGTH_SHORT).show();
+                        AppExecuter.getInstance().getSubIO().execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                dbHelper.insertToDB(title, text, tempUri);
+                                Toast.makeText(EditActivity.this, "Все успешно сохранено", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     } else {
-                        dbHelper.updateItemToId(title, text, tempUri ,item.getId());
+                        dbHelper.updateItemToId(title, text, tempUri, item.getId());
                     }
                     //закрываем базу
                     dbHelper.closeDB();

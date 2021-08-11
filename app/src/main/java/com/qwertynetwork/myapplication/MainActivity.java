@@ -17,8 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.qwertynetwork.myapplication.adapter.MainAdapter;
 import com.qwertynetwork.myapplication.db.DBHelper;
+import com.qwertynetwork.myapplication.db.OnDataReceived;
+import com.qwertynetwork.myapplication.model.ListItem;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements OnDataReceived {
 
     private FloatingActionButton buttonGet;
 
@@ -77,9 +81,9 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
+            public boolean onQueryTextChange(final String newText) {
                 Log.d("myLog", "newText " + newText);
-                mainAdapter.updateAdapter(dbHelper.getFromDB(newText));
+                readFromDB(newText);
                 return false;
             }
         });
@@ -91,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         dbHelper.openDB();
-        mainAdapter.updateAdapter(dbHelper.getFromDB(""));
+        readFromDB("");
     }
 
     @Override
@@ -112,6 +116,24 @@ public class MainActivity extends AppCompatActivity {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 mainAdapter.removeItem(viewHolder.getAdapterPosition(), dbHelper);
                 Log.d("myLog", "Touch to " + direction);
+            }
+        });
+    }
+
+    private void readFromDB(final String text) {
+        AppExecuter.getInstance().getSubIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                dbHelper.getFromDB(text, MainActivity.this);
+            }
+        });
+    }
+
+    public void onReceived(List<ListItem> list) {
+        AppExecuter.getInstance().getMainIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                mainAdapter.updateAdapter(list);
             }
         });
     }
